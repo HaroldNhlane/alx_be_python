@@ -1,7 +1,11 @@
-P = 1000 #representing $1000 . (P) is the principal amount (initial investment
-R = 0.05 #representing 5% annual interest rate. ( R ) is the annual interest rate (as a decimal)
-T = 3 #representing 3 years. ( T ) is the time the money is invested for in years.
-I = "interest" #(I) is the interest earned
+princile = 1000 #representing $1000 . (P) is the principal amount (initial investment
+rate = 0.05 #representing 5% annual interest rate. ( R ) is the annual interest rate (as a decimal)
+time = 3 #representing 3 years. ( T ) is the time the money is invested for in years.
+
+P = princile
+R = rate
+T = time
+
 
 interest = P * R * T
 
