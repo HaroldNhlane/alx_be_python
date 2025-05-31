@@ -1,9 +1,6 @@
-# Prompt the user for the pattern size
-size_str = input("Enter the size of the pattern: ")
-
-# Convert the input to an integer and validate
+# Prompt the user for the pattern size and convert directly to an integer
 try:
-    size = int(size_str)
+    size = int(input("Enter the size of the pattern: "))
     if size <= 0:
         print("Please enter a positive integer for the pattern size.")
         exit()
