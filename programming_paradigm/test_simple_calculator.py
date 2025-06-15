@@ -69,7 +69,7 @@ class TestSimpleCalculator(unittest.TestCase):
 
 
     # --- Test Methods for multiply() ---
-    def test_multiply_numbers(self):
+    def test_multiplication(self):
         """Test the multiplication method with various number types and scenarios."""
         # Positive numbers
         self.assertEqual(self.calc.multiply(2, 3), 6)
