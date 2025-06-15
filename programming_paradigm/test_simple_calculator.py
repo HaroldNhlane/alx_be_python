@@ -94,8 +94,8 @@ class TestSimpleCalculator(unittest.TestCase):
 
 
     # --- Test Methods for divide() ---
-    def test_divide_numbers(self):
-        """Test the divide method with various number types and scenarios (excluding division by zero)."""
+    def test_division(self):
+        """Test the division method with various number types and scenarios (excluding division by zero)."""
         # Positive numbers
         self.assertEqual(self.calc.divide(10, 5), 2.0)
         self.assertEqual(self.calc.divide(7, 2), 3.5)
@@ -117,7 +117,7 @@ class TestSimpleCalculator(unittest.TestCase):
         self.assertAlmostEqual(self.calc.divide(1.0, 3.0), 0.3333333333333333)
 
     def test_divide_by_zero(self):
-        """Test division by zero, which should return None."""
+        """Test division by zero, which should return None as per the SimpleCalculator's logic."""
         self.assertIsNone(self.calc.divide(10, 0))
         self.assertIsNone(self.calc.divide(-5, 0))
         self.assertIsNone(self.calc.divide(0, 0)) # Edge case: 0/0 is also None per the function's logic
