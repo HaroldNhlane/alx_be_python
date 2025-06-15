@@ -1,9 +1,12 @@
 import sys
 from bank_account import BankAccount
+from robust_division_calculator import safe_divide
+
 
 def main():
     """
-    Main function to handle command-line interactions with the BankAccount.
+    Main function to handle command-line interactions with BankAccount
+    and perform division operations.
     """
     # Initialize the account with an example starting balance.
     # You can change this balance as needed for testing different scenarios.
@@ -13,59 +16,74 @@ def main():
         print(f"Error initializing account: {e}")
         sys.exit(1)
 
-    # Check if enough command-line arguments are provided
+    # --- Command Line Argument Handling ---
+    # The first argument is always the command (e.g., 'deposit', 'withdraw', 'display', 'divide')
     if len(sys.argv) < 2:
-        print("Usage: python main-0.py <command>[:<amount>]")
-        print("Commands:")
-        print("  deposit:<amount>   - Deposit funds into the account (e.g., deposit:50)")
-        print("  withdraw:<amount>  - Withdraw funds from the account (e.g., withdraw:20)")
-        print("  display            - Display the current account balance")
-        sys.exit(1) # Exit with an error code
+        print("Usage:")
+        print("  For Bank Account: python main.py <command>:<amount>")
+        print("    Commands: deposit, withdraw, display")
+        print("  For Division:     python main.py divide <numerator> <denominator>")
+        sys.exit(1)
 
-    # Parse the command and optional amount from the command-line argument
-    command_input = sys.argv[1]
-    command_parts = command_input.split(':')
-    command = command_parts[0].lower() # Convert command to lowercase for case-insensitivity
+    command_full = sys.argv[1]
+    command_parts = command_full.split(':')
+    command = command_parts[0].lower() # Primary command (e.g., 'deposit', 'divide')
 
-    amount = None
-    if len(command_parts) > 1:
-        try:
-            amount = float(command_parts[1])
-        except ValueError:
-            print(f"Error: Invalid amount '{command_parts[1]}'. Amount must be a number.")
-            sys.exit(1)
+    # --- Bank Account Operations ---
+    if command in ["deposit", "withdraw", "display"]:
+        amount = None
+        if len(command_parts) > 1:
+            try:
+                amount = float(command_parts[1])
+            except ValueError:
+                print(f"Error: Invalid amount '{command_parts[1]}'. Amount must be a number.")
+                sys.exit(1)
+        elif command != "display": # Deposit/withdraw without amount is an error
+             print(f"Error: '{command}' command requires an amount (e.g., {command}:50).")
+             sys.exit(1)
 
-    # Execute the appropriate bank operation based on the command
-    if command == "deposit":
-        if amount is not None:
+        if command == "deposit":
             try:
                 account.deposit(amount)
-                # This is the single print statement for successful deposit
-                print(f"Deposited: ${amount:.1f}") # Changed to .1f for "67.0" format
+                print(f"Deposited: ${amount:.1f}")
             except (TypeError, ValueError) as e:
                 print(f"Error depositing: {e}")
-        else:
-            print("Error: Deposit command requires an amount (e.g., deposit:50).")
-    elif command == "withdraw":
-        if amount is not None:
+        elif command == "withdraw":
             try:
                 if account.withdraw(amount):
-                    # This is the single print statement for successful withdrawal
-                    print(f"Withdrew: ${amount:.1f}") # Changed to .1f for "20.0" format
+                    print(f"Withdrew: ${amount:.1f}")
                 else:
-                    print("Insufficient funds.") # Already handled in withdraw method, but good to reinforce
+                    print("Insufficient funds.")
             except (TypeError, ValueError) as e:
                 print(f"Error withdrawing: {e}")
-        else:
-            print("Error: Withdraw command requires an amount (e.g., withdraw:20).")
-    elif command == "display":
-        if amount is None: # Ensure no extra arguments for display command
-            account.display_balance()
-        else:
-            print("Error: Display command does not take an amount.")
+        elif command == "display":
+            if amount is None: # Ensure no extra arguments for display command
+                account.display_balance()
+            else:
+                print("Error: Display command does not take an amount.")
+
+    # --- Division Calculator Operation ---
+    elif command == "divide":
+        # For 'divide', we expect 3 arguments in total: script_name, 'divide', numerator, denominator
+        if len(sys.argv) != 4:
+            print("Usage: python main.py divide <numerator> <denominator>")
+            sys.exit(1)
+
+        numerator = sys.argv[2]
+        denominator = sys.argv[3]
+
+        result = safe_divide(numerator, denominator)
+        print(result)
+
+    # --- Invalid Command ---
     else:
         print(f"Error: Invalid command '{command}'.")
-        print("Commands: deposit, withdraw, display")
+        print("Please use 'deposit', 'withdraw', 'display' for banking, or 'divide' for calculations.")
+        print("Usage examples:")
+        print("  python main.py deposit:50")
+        print("  python main.py display")
+        print("  python main.py divide 10 5")
+
 
 if __name__ == "__main__":
     main()
