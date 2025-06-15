@@ -43,7 +43,7 @@ class TestSimpleCalculator(unittest.TestCase):
 
 
     # --- Test Methods for subtract() ---
-    def test_subtract_numbers(self):
+    def test_subtraction(self):
         """Test the subtraction method with various number types and scenarios."""
         # Positive numbers
         self.assertEqual(self.calc.subtract(5, 3), 2)
@@ -95,7 +95,7 @@ class TestSimpleCalculator(unittest.TestCase):
 
     # --- Test Methods for divide() ---
     def test_divide_numbers(self):
-        """Test the divide method with various number types and scenarios."""
+        """Test the divide method with various number types and scenarios (excluding division by zero)."""
         # Positive numbers
         self.assertEqual(self.calc.divide(10, 5), 2.0)
         self.assertEqual(self.calc.divide(7, 2), 3.5)
@@ -110,7 +110,7 @@ class TestSimpleCalculator(unittest.TestCase):
 
         # Zero by non-zero number
         self.assertEqual(self.calc.divide(0, 5), 0.0)
-        self.assertEqual(self.calc.divide(0, -5), -0.0)
+        self.assertEqual(self.calc.divide(0, -5), -0.0) # Floats can have negative zero
 
         # Floating-point numbers
         self.assertAlmostEqual(self.calc.divide(5.0, 2.0), 2.5)
@@ -125,4 +125,8 @@ class TestSimpleCalculator(unittest.TestCase):
 
 # This block allows you to run the tests directly from the command line
 if __name__ == '__main__':
+    # unittest.main() looks at sys.argv, and the first argument is normally the script name.
+    # We pass a dummy first argument to ensure unittest.main() doesn't try to interpret
+    # test_simple_calculator.py as a test name itself, and exit=False prevents it from
+    # exiting sys immediately, which can be useful in some IDEs.
     unittest.main(argv=['first-arg-is-ignored'], exit=False)
