@@ -1,4 +1,3 @@
-# No import statement here for BankAccount itself
 class BankAccount:
     """
     A class to represent a simple bank account.
@@ -11,9 +10,12 @@ class BankAccount:
         Args:
             initial_balance (float, optional): The starting balance for the account. Defaults to 0.
         """
-        if not isinstance(initial_balance, (int, float)) or initial_balance < 0:
-            raise ValueError("Initial balance must be a non-negative number.")
-        self._account_balance = initial_balance  # Using a protected attribute for encapsulation
+        # Input validation for initial_balance
+        if not isinstance(initial_balance, (int, float)):
+            raise TypeError("Initial balance must be a number.")
+        if initial_balance < 0:
+            raise ValueError("Initial balance cannot be negative.")
+        self._account_balance = float(initial_balance) # Ensure it's stored as a float
 
     def deposit(self, amount):
         """
@@ -22,10 +24,14 @@ class BankAccount:
         Args:
             amount (float): The amount to deposit. Must be a positive number.
         """
-        if not isinstance(amount, (int, float)) or amount <= 0:
+        # Input validation for deposit amount
+        if not isinstance(amount, (int, float)):
+            raise TypeError("Deposit amount must be a number.")
+        if amount <= 0:
             raise ValueError("Deposit amount must be a positive number.")
         self._account_balance += amount
-        print(f"Successfully deposited: ${amount:.2f}")
+        # Removed the print statement from here.
+        # The main script will handle printing the "Deposited" message.
 
     def withdraw(self, amount):
         """
@@ -37,18 +43,21 @@ class BankAccount:
         Returns:
             bool: True if the withdrawal was successful, False otherwise (insufficient funds).
         """
-        if not isinstance(amount, (int, float)) or amount <= 0:
+        # Input validation for withdrawal amount
+        if not isinstance(amount, (int, float)):
+            raise TypeError("Withdrawal amount must be a number.")
+        if amount <= 0:
             raise ValueError("Withdrawal amount must be a positive number.")
+
         if amount > self._account_balance:
-            print("Insufficient funds.")
-            return False
+            return False # Indicate insufficient funds without printing here
         else:
             self._account_balance -= amount
-            print(f"Successfully withdrew: ${amount:.2f}")
-            return True
+            return True # Indicate successful withdrawal
 
     def display_balance(self):
         """
         Displays the current balance of the account in a user-friendly format.
         """
+        # Ensure consistent formatting with 2 decimal places
         print(f"Current Balance: ${self._account_balance:.2f}")
