@@ -93,18 +93,19 @@ class Library:
             book (Book): An instance of Book or any of its derived classes.
         """
         self.books.append(book)
-        print(f"Added '{book.title}' to the library.")
+        # Removed: print(f"Added '{book.title}' to the library.")
 
     def list_books(self):
         """
         Prints the details of each book currently stored in the library.
         It utilizes the __str__ method of each book object to get its display string.
         """
-        print("\n--- Books in the Library ---")
+        # Removed: print("\n--- Books in the Library ---")
         if not self.books:
             print("The library is empty.")
             return
 
         for book in self.books:
             print(book) # This will automatically call the __str__ method of the book object
-        print("----------------------------")
+        # Removed: print("----------------------------")
+
