@@ -10,6 +10,7 @@ class Book:
         """
         The constructor method for the Book class.
         It initializes a new Book instance with the provided title, author, and year.
+        Note: There is no print statement here to match the exact expected output.
 
         Args:
             title (str): The title of the book.
@@ -19,7 +20,6 @@ class Book:
         self.title = title
         self.author = author
         self.year = year
-        print(f"Book '{self.title}' by {self.author} created.") # Optional: Confirmation of creation
 
     def __del__(self):
         """
@@ -55,3 +55,4 @@ class Book:
         # Note the single quotes around title and author to ensure valid Python syntax
         # if the string were to be evaluated.
         return f"Book('{self.title}', '{self.author}', {self.year})"
+
