@@ -43,3 +43,5 @@ class Calculator:
         # Accessing the class attribute 'calculation_type' using 'cls'.
         print(f"Calculation type: {cls.calculation_type}")
         return a * b
+
+
